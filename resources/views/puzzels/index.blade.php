@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12 margin-tb">
+        <div class="col-lg-12 col-md-2 margin-tb">
             <div class="pull-left">
                 <h2>Laravel 8 CRUD Example from scratch - ItSolutionStuff.com</h2>
             </div>
@@ -34,7 +34,7 @@
         @foreach ($puzzels->chunk(3) as $chunk)
             <div class="row">
                 @foreach ($chunk as $puzzel)
-                <div class="col-lg-4 col-sm 2 mb-3 mb-sm-0">
+                <div class="col-lg-4 col-md-12 col-sm-12 ">
 
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" width="200px">

@@ -22,7 +22,7 @@
             </ul>
         </div>
     @endif
-    <img class="card-img-top" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" width="500px">
+    <img class="card-img-top" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" width="750px">
 
     <form action="{{ route('puzzels.update',$puzzel->id) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')

@@ -65,7 +65,9 @@ class PuzzelController extends Controller
      */
     public function show($id)
     {
-        return view('puzzels.show', compact('puzzel'));
+        $puzzel = Puzzel::find($id);
+
+        return view('puzzels.show')->with("puzzel", $puzzel);
 
     }
 
