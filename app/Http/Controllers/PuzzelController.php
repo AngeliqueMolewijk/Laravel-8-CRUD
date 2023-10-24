@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Puzzel;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class PuzzelController extends Controller
 {
@@ -39,11 +41,17 @@ class PuzzelController extends Controller
     {
 
         $puzzel = new Puzzel;
-        dd($request->file('image'));
+        // dd($request->file('image')->getClientOriginalExtension());
         if ($request->file('image')) {
             $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('images'), $filename);
+            $img = Image::make($file->path());
+            $img->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save(public_path('/images') . '/' . $filename);
+            // $filesave = ResizeImage::make($request->file('image'))
+            // ->resize(100, 100)->save();
+            // $filesave->move(public_path('images'), $filename);
             $puzzel->image = $filename;
         }
         $puzzel->title = $request->title;
