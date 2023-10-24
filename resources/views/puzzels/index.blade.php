@@ -1,8 +1,8 @@
 @extends('products.layout')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 col-md-2 margin-tb">
+    <div class="row col-lg-12 col-md-2 margin-tb">
+        <div class="">
             <div class="pull-left">
                 <h2>Laravel 8 CRUD Example from scratch - ItSolutionStuff.com</h2>
             </div>
