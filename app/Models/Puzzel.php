@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Puzzel extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title', 'image', 'stukjes', 'own', 'gelegd'
+    ];
 }

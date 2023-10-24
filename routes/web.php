@@ -21,3 +21,18 @@ Route::get('/', function () {
 
 Route::resource('products', ProductController::class);
 Route::resource('puzzels', PuzzelController::class);
+
+// // returns the home page with all posts
+// Route::get('/', PuzzelController::class . '@index')->name('posts.index');
+// // returns the form for adding a post
+// Route::get('/puzzels/create', PuzzelController::class . '@create')->name('posts.create');
+// // adds a post to the database
+// Route::post('/puzzels', PuzzelController::class . '@store')->name('posts.store');
+// // returns a page that shows a full post
+// Route::get('/puzzels/{puzzel}', PuzzelController::class . '@show')->name('posts.show');
+// // returns the form for editing a post
+// Route::get('/puzzels/{puzzel}/edit', PuzzelController::class . '@edit')->name('posts.edit');
+// // updates a post
+// Route::put('/puzzels/{puzzel}', PuzzelController::class . '@update')->name('posts.update');
+// // deletes a post
+// Route::delete('/puzzels/{puzzel}', PuzzelController::class . '@destroy')->name('posts.destroy');

@@ -14,10 +14,9 @@ class PuzzelController extends Controller
      */
     public function index()
     {
-        $puzzels = Puzzel::latest()->paginate(5);
+        $puzzels = Puzzel::all()->sortByDesc('updated_at');
 
-        return view('puzzels.index', compact('puzzels'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('puzzels.index', compact('puzzels'));
     }
 
     /**
@@ -27,7 +26,7 @@ class PuzzelController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('puzzels.create');
     }
 
     /**
@@ -38,7 +37,24 @@ class PuzzelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $puzzel = new Puzzel;
+        dd($request->file('image'));
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $puzzel->image = $filename;
+        }
+        $puzzel->title = $request->title;
+        $puzzel->stukjes = $request->stukjes;
+        $puzzel->own = $request->eigen;
+        $puzzel->gelegd = $request->gelegd;
+        // $puzzel->image = $imageName;
+        $puzzel->save();
+
+        return redirect()->route('puzzels.index')
+        ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -49,7 +65,8 @@ class PuzzelController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('puzzels.show', compact('puzzel'));
+
     }
 
     /**
@@ -58,9 +75,10 @@ class PuzzelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Puzzel $puzzel)
     {
-        //
+        return view('puzzels.edit', compact('puzzel'));
+
     }
 
     /**
@@ -72,7 +90,23 @@ class PuzzelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $puzzel = Puzzel::find($id);
+        // dd($request->image);
+        // dd($request->hasFile('image'));
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $puzzel->image = $filename;
+        }
+        $puzzel->title = $request->title;
+        $puzzel->stukjes = $request->stukjes;
+        $puzzel->own = $request->eigen;
+        $puzzel->gelegd = $request->gelegd;
+        $puzzel->save();
+
+        return redirect()->route('puzzels.index')
+        ->with('success', 'Puzzel updated successfully');
     }
 
     /**
@@ -81,8 +115,11 @@ class PuzzelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Puzzel $puzzel)
     {
-        //
+        $puzzel->delete();
+
+        return redirect()->route('puzzels.index')
+        ->with('success', 'Puzzel deleted successfully');
     }
 }
