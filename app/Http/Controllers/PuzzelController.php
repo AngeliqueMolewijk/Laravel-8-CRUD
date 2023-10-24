@@ -45,7 +45,7 @@ class PuzzelController extends Controller
         if ($request->file('image')) {
             $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
-            $img = Image::make($file->path());
+            $img = Image::make($request->file('image')->getRealPath());
             $img->resize(500, 500, function ($constraint) {
                 $constraint->aspectRatio();
             })->save(public_path('/images') . '/' . $filename);
