@@ -6,7 +6,7 @@ use App\Models\Puzzel;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-
+use Auth;
 class PuzzelController extends Controller
 {
     /**
@@ -39,22 +39,40 @@ class PuzzelController extends Controller
      */
     public function store(Request $request)
     {
-
+        // dd($request);
         $puzzel = new Puzzel;
+        
         // dd($request->file('image')->getClientOriginalExtension());
         if ($request->file('image')) {
             $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
-            $img = Image::make($request->file('image')->getRealPath());
-            $img->resize(500, 500, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save(public_path('/images') . '/' . $filename);
+            $file->move(public_path() . '/images/', $filename);
+
+
+            // $img = Image::make($request->file('image')->getRealPath());
+            // $img->resize(500, 500, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // })->save(storage_path('app/public/' . '/' . $filename));
             // $filesave = ResizeImage::make($request->file('image'))
             // ->resize(100, 100)->save();
             // $filesave->move(public_path('images'), $filename);
             $puzzel->image = $filename;
         }
-        $puzzel->title = $request->title;
+        if ($request->newurl) {
+            $contents = file_get_contents($request->newurl);
+            $name = date('YmdHi') . substr($request->newurl, strrpos($request->newurl, '/') + 1);
+            Storage::disk('public_uploads')->put($name, $contents);
+            // dd($contents);
+            // $filename = date('YmdHi') . ".jpg";
+            // // $filename = date('YmdHi') . $file->getClientOriginalName();
+            // $contents->move(public_path('images'));
+            // $img = Image::make($contents);
+            // $img->resize(500, 500, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // })->save(storage_path('app/public/' . '/' . $filename));
+            $puzzel->image = $name;
+        }
+        $puzzel->title = $request->newname;
         $puzzel->stukjes = $request->stukjes;
         $puzzel->own = $request->eigen;
         $puzzel->gelegd = $request->gelegd;

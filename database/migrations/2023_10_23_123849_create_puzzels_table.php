@@ -13,6 +13,7 @@ class CreatePuzzelsTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('puzzels')) {
         Schema::create('puzzels', function (Blueprint $table) {
             $table->id();
             $table->string('title');
@@ -23,6 +24,7 @@ class CreatePuzzelsTable extends Migration
 
             $table->timestamps();
         });
+    }
     }
 
     /**

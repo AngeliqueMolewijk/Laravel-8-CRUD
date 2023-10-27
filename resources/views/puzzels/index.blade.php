@@ -1,7 +1,7 @@
-@extends('products.layout')
+@extends('puzzels.layout')
 
 @section('content')
-    <div class="row col-lg-12 col-md-2 margin-tb">
+    <div class="row margin-tb">
         <div class="">
             <div class="pull-left">
                 <h2>Puzzel app</h2>
@@ -36,7 +36,7 @@
                 @foreach ($chunk as $puzzel)
                 <div class="col-lg-4 col-md-12 col-sm-12 ">
 
-                    <div class="card" style="width: 18rem;">
+                    <div class="card  mb-3" style="width: 18rem;">
                         <img class="card-img-top" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" width="200px">
                         <div class="card-body">
                             <h5 class="card-title"> {{ $puzzel->title }}</h5>

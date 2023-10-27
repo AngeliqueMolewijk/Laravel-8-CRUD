@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\PuzzelController;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,24 +14,13 @@ use App\Http\Controllers\PuzzelController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::resource('/puzzels', PuzzelController::class)->middleware(['auth']);
 
-Route::resource('products', ProductController::class);
-Route::resource('puzzels', PuzzelController::class);
-
-// // returns the home page with all posts
-// Route::get('/', PuzzelController::class . '@index')->name('posts.index');
-// // returns the form for adding a post
-// Route::get('/puzzels/create', PuzzelController::class . '@create')->name('posts.create');
-// // adds a post to the database
-// Route::post('/puzzels', PuzzelController::class . '@store')->name('posts.store');
-// // returns a page that shows a full post
-// Route::get('/puzzels/{puzzel}', PuzzelController::class . '@show')->name('posts.show');
-// // returns the form for editing a post
-// Route::get('/puzzels/{puzzel}/edit', PuzzelController::class . '@edit')->name('posts.edit');
-// // updates a post
-// Route::put('/puzzels/{puzzel}', PuzzelController::class . '@update')->name('posts.update');
-// // deletes a post
-// Route::delete('/puzzels/{puzzel}', PuzzelController::class . '@destroy')->name('posts.destroy');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+Route::post('getJsonSearch', [GoogleController::class, 'getJsonSearch'])->middleware(['auth']);
+require __DIR__ . '/auth.php';
