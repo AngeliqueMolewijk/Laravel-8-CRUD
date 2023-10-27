@@ -45,14 +45,18 @@
                                     {{ $puzzel->stukjes }}</li>
                                     <li class="list-group-item">Eigen:
                                     @if($puzzel->own === 1)
+                                    <div style="background-color: rgb(219, 243, 221);">
                                     Ja
+                                    </div>
                                     @else
                                     Nee    
                                     @endif
                                 </li>
                                 <li class="list-group-item">Gelegd:
                                     @if ($puzzel->gelegd ===1)
+                                    <div style="background-color: rgb(219, 243, 221);">
                                     Ja
+                                    </div>
                                     @else
                                         Nee
                                     @endif
