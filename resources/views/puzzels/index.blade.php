@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="row margin-tb">
-        <div class="">
-            <div class="pull-left">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12">
                 <h2>Puzzel app</h2>
             </div>
             <div class="pull-right">
@@ -34,7 +34,7 @@
         @foreach ($puzzels->chunk(3) as $chunk)
             <div class="row">
                 @foreach ($chunk as $puzzel)
-                <div class="col-lg-4 col-md-12 col-sm-12 ">
+                <div class="col-sm-12 col-lg-4">
 
                     <div class="card  mb-3" style="width: 18rem;">
                         <img class="card-img-top" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" width="200px">

@@ -1,4 +1,4 @@
-@extends('products.layout')
+@extends('puzzels.layout')
 
 @section('content')
     <div class="row">
