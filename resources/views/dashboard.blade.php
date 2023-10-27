@@ -15,8 +15,9 @@
                     <div class="alert alert-success">
                         You are logged in!
                     </div>       
-                @endif                
-            </div>
+                @endif   
+                <a href='{!! url('/puzzels'); !!}'>Puzzels</a>
+                </div>
         </div>
     </div>    
 </div>
