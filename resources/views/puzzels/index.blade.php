@@ -34,52 +34,59 @@
         @foreach ($puzzels->chunk(3) as $chunk)
             <div class="row">
                 @foreach ($chunk as $puzzel)
-                <div class="col-sm-12 col-lg-4">
+                    <div class="col-sm-12 col-lg-4  d-flex align-items-stretch">
 
-                    <div class="card  mb-3" style="width: 18rem;">
-                        <img class="card-img-top" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" width="200px">
-                        <div class="card-body">
-                            <h5 class="card-title"> {{ $puzzel->title }}</h5>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Stukjes:
-                                    {{ $puzzel->stukjes }}</li>
+                        <div class="card  mb-3" style="width: 18rem;">
+                            <a href="{{ route('puzzels.edit', $puzzel->id) }}">
+                            <img class="card-img-top h-100" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli"
+                                width="200px"></a>
+                            <div class="card-body d-flex flex-column mb-2">
+                                <h5 class="card-title"> {{ $puzzel->title }}</h5>
+                                <ul class="list-group list-group-flush mt-auto">
+                                    <li class="list-group-item">Stukjes:
+                                        {{ $puzzel->stukjes }}</li>
                                     <li class="list-group-item">Eigen:
-                                    @if($puzzel->own === 1)
-                                    <div style="background-color: rgb(219, 243, 221);">
-                                    Ja
-                                    </div>
-                                    @else
-                                    Nee    
-                                    @endif
-                                </li>
-                                <li class="list-group-item">Gelegd:
-                                    @if ($puzzel->gelegd ===1)
-                                    <div style="background-color: rgb(219, 243, 221);">
-                                    Ja
-                                    </div>
-                                    @else
-                                        Nee
-                                    @endif
-                                   </li>
-                              </ul>
-                            
-                            
-                            
+                                        @if ($puzzel->own === 1)
+                                            <div style="background-color: rgb(219, 243, 221);">
+                                                Ja
+                                            </div>
+                                        @else
+                                            <div style="background-color: rgb(220, 217, 217);">
+                                                Nee
+                                            </div>
+                                        @endif
+                                    </li>
+                                    <li class="list-group-item">Gelegd:
+                                        @if ($puzzel->gelegd === 1)
+                                            <div style="background-color: rgb(219, 243, 221);">
+                                                Ja
+                                            </div>
+                                        @else
+                                            <div style="background-color: rgb(220, 217, 217);">
+                                                Nee
+                                            </div>
+                                        @endif
+                                    </li>
+                                </ul>
 
-                            <form action="{{ route('puzzels.destroy', $puzzel->id) }}" method="POST">
+                                <div class="mt-auto text-center">
 
-                                <a class="btn btn-info" href="{{ route('puzzels.show', $puzzel->id) }}">Show</a>
+                                    <form action="{{ route('puzzels.destroy', $puzzel->id) }}" method="POST">
 
-                                <a class="btn btn-primary" href="{{ route('puzzels.edit', $puzzel->id) }}">Edit</a>
+                                        <a class="btn btn-info" href="{{ route('puzzels.show', $puzzel->id) }}">Show</a>
 
-                                @csrf
-                                @method('DELETE')
+                                        <a class="btn btn-primary" href="{{ route('puzzels.edit', $puzzel->id) }}">Edit</a>
 
-                                <button type="submit" class="btn btn-danger" onclick="return myFunction();">Delete</button>
-                            </form>
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return myFunction();">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
         @endforeach
@@ -87,8 +94,8 @@
     {{-- {!! $puzzels->links() !!} --}}
     <script>
         function myFunction() {
-            if(!confirm("Are You Sure to delete this"))
-            event.preventDefault();
+            if (!confirm("Are You Sure to delete this"))
+                event.preventDefault();
         }
-       </script>
+    </script>
 @endsection

@@ -29,7 +29,7 @@
 
         <div class="card" style="width: 18rem;">
             <img class="card-img-top img-responsive" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" width="1000PX">
-            <div class="card-body">
+            <div class="card-body d-flex flex-column ">
                 <h5 class="card-title"> {{ $puzzel->title }}</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Stukjes:
