@@ -150,4 +150,17 @@ class PuzzelController extends Controller
         return redirect()->route('puzzels.index')
         ->with('success', 'Puzzel deleted successfully');
     }
+    public function search(Request $request)
+    {
+        // Get the search value from the request
+        $search = $request->input('search');
+
+        // Search in the title and body columns from the posts table
+        $puzzel = Puzzel::query()
+            ->where('title', 'LIKE', "%{$search}%")
+            ->get();
+
+        // Return the search view with the resluts compacted
+        return view('puzzels.index')->with("puzzels", $puzzel);
+    }
 }

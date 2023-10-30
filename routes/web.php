@@ -24,3 +24,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 Route::post('getJsonSearch', [GoogleController::class, 'getJsonSearch'])->middleware(['auth']);
 require __DIR__ . '/auth.php';
+Route::get('/search/',  [PuzzelController::class, 'search'])->name('search');
+// Route::get('/search/{id}', [PuzzelController::class, 'search']);
+
+
