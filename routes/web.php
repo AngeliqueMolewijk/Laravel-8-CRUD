@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', [PuzzelController::class, 'index']);
 Route::resource('/puzzels', PuzzelController::class)->middleware(['auth']);
 
 Route::get('/dashboard', function () {
