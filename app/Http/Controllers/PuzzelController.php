@@ -74,6 +74,7 @@ class PuzzelController extends Controller
         }
         $puzzel->title = $request->newname;
         $puzzel->stukjes = $request->stukjes;
+        $puzzel->nummer = $request->nummer;
         $puzzel->own = $request->eigen;
         $puzzel->gelegd = $request->gelegd;
         // $puzzel->image = $imageName;
@@ -129,6 +130,7 @@ class PuzzelController extends Controller
         }
         $puzzel->title = $request->title;
         $puzzel->stukjes = $request->stukjes;
+        $puzzel->nummer = $request->nummer;
         $puzzel->own = $request->eigen;
         $puzzel->gelegd = $request->gelegd;
         $puzzel->save();

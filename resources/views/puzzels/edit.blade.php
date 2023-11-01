@@ -40,7 +40,12 @@
                 <div class="form-group">
                     <strong>Stukjes:</strong>
                     <input type="text" name="stukjes" class="form-control" value= "{{$puzzel->stukjes}}" placeholder="Stukjes">
-                </div>            <div class="form-group">
+                </div>      
+                <div class="form-group">
+                    <strong>Nummer:</strong>
+                    <input type="text" name="nummer" class="form-control" value= "{{$puzzel->nummer}}" placeholder="Nummer">
+                </div>         
+                <div class="form-group">
                     <strong>Eigen:</strong>
                     <input type="checkbox" name="eigen" id="eigen" value="1" {{  ($puzzel->own == 1 ? ' checked' : '') }}>
                     {{-- <input type="checkbox" name="eigen" class="form-control" value= "{{$puzzel->own}}" placeholder="Eigen" value="1"> --}}

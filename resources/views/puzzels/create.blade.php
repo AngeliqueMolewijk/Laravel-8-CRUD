@@ -77,6 +77,10 @@
                     <input type="text"  id="newname" name="newname" class="form-control">
                 </div>
                 <div class="form-group">
+                    <strong>Nummer:</strong>
+                    <input type="text" name="nummer" class="form-control" placeholder="nummer">
+                </div>
+                <div class="form-group">
                     <strong>Stukjes:</strong>
                     <input type="text" name="stukjes" class="form-control" placeholder="Stukjes">
                 </div>

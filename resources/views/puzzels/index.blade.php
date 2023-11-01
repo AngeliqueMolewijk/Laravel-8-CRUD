@@ -6,7 +6,7 @@
             <div class="col-lg-4 col-sm-12">
                 <h2>Puzzel app</h2>
             </div>
-            <div class="pull-right">
+            <div class="pull-right mb-2">
                 <a class="btn btn-success" href="{{ route('puzzels.create') }}"> Create New Product</a>
             </div>
         </div>
@@ -43,28 +43,30 @@
                             <div class="card-body d-flex flex-column mb-2">
                                 <h5 class="card-title"> {{ $puzzel->title }}</h5>
                                 <ul class="list-group list-group-flush mt-auto">
+                                    <li class="list-group-item">Nummer :
+                                        {{ $puzzel->nummer }}</li>
                                     <li class="list-group-item">Stukjes:
                                         {{ $puzzel->stukjes }}</li>
-                                    <li class="list-group-item">Eigen:
+                                    <li class="list-group-item">
                                         @if ($puzzel->own === 1)
-                                            <div style="background-color: rgb(219, 243, 221);">
-                                                Ja
-                                            </div>
+                                            <span style="background-color: rgb(219, 243, 221);">
+                                                Eigen:    Ja
+                                            </span>
                                         @else
-                                            <div style="background-color: rgb(220, 217, 217);">
-                                                Nee
-                                            </div>
+                                            <span style="background-color: rgb(220, 217, 217);">
+                                                Eigen:    Nee
+                                            </span>
                                         @endif
                                     </li>
-                                    <li class="list-group-item">Gelegd:
+                                    <li class="list-group-item">
                                         @if ($puzzel->gelegd === 1)
-                                            <div style="background-color: rgb(219, 243, 221);">
-                                                Ja
-                                            </div>
+                                            <span style="background-color: rgb(219, 243, 221);">
+                                                Gelegd:    Ja
+                                            </span>
                                         @else
-                                            <div style="background-color: rgb(220, 217, 217);">
-                                                Nee
-                                            </div>
+                                            <span style="background-color: rgb(220, 217, 217);">
+                                                Gelegd:   Nee
+                                            </span>
                                         @endif
                                     </li>
                                 </ul>
