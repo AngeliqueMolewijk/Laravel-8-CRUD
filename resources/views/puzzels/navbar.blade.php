@@ -7,7 +7,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ route('puzzels.index') }}">Alle Puzzels</a>
+            <a class="nav-link active" aria-current="page" href="{{ route('puzzels.index') }}">Al mijn Puzzels</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('puzzels.create') }}">Nieuwe puzzel</a>
@@ -24,7 +24,7 @@
             </ul>
           </li> --}}
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link " href="{{ route('allepuzzels') }}" tabindex="-1" >Alle Puzzels</a>
           </li>
         </ul>
         <form action="{{ route('search') }}" method="GET" class="d-flex">

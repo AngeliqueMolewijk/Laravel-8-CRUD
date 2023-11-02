@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Puzzel;
+use App\Models\AllePuzzels;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -106,7 +107,12 @@ class PuzzelController extends Controller
      */
     public function edit(Puzzel $puzzel)
     {
-        return view('puzzels.edit', compact('puzzel'));
+        $title = $puzzel->getAttribute('title');
+        $allePuzzels = AllePuzzels::query()
+            ->where('NaamNederlands', 'LIKE', "%{$title}%")->orWhere('NaamEngels', 'LIKE', "%{$title}%")
+            ->get()->sortByDesc('Jaar', SORT_NUMERIC);
+        // $allePuzzels = AllePuzzels::all()->sortByDesc('Jaar');
+        return view('puzzels.edit', compact(['puzzel', 'allePuzzels']));
 
     }
 
@@ -164,5 +170,43 @@ class PuzzelController extends Controller
 
         // Return the search view with the resluts compacted
         return view('puzzels.index')->with("puzzels", $puzzel);
+    }
+    public function allePuzzels()
+    {
+        $allePuzzels = AllePuzzels::all()->sortByDesc('Jaar');
+
+        return view('puzzels.puzzellijst', compact('allePuzzels'));
+    }
+    public function searchallepuzzels(Request $request)
+    {
+        // dd($request->input('aantal'));
+        $searchname = $request->input('searchnaam');
+        // dd($searchname);
+        $aantal = $request->input('aantal');
+        $allePuzzels = AllePuzzels::query()
+            ->where('Aant', 'LIKE', "%{$aantal}%")
+            ->where('NaamNederlands', 'LIKE', "%{$searchname}%")
+            ->orWhere('NaamEngels', 'LIKE', "%{$searchname}%")
+            ->get()->sortByDesc('Jaar', SORT_NUMERIC);
+        return view('puzzels.puzzellijst', compact('allePuzzels'));
+    }
+    // public function addimage($puzzelid, $puzzelimage)
+    // {
+    //     dd($puzzelid);
+    //     $puzzeladdimage = AllePuzzels::find($puzzelid);
+    //     // dd($puzzeladdimage);
+    //     $puzzeladdimage->image = $puzzelimage;
+    //     $puzzeladdimage->save();
+
+    // }
+    public function addimage(Request $request)
+    {
+        // dd($request->id);
+        $puzzeladdimage = AllePuzzels::find($request->id);
+        // dd($puzzeladdimage);
+        $puzzeladdimage->image = $request->image;
+        $puzzeladdimage->save();
+        return redirect('puzzels/' . $request->originalid . '/edit');
+        
     }
 }

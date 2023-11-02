@@ -16,13 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PuzzelController::class, 'index']);
 Route::resource('/puzzels', PuzzelController::class)->middleware(['auth']);
-
+Route::get('/allepuzzels/',  [PuzzelController::class, 'allePuzzels'])->name('allepuzzels');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 Route::post('getJsonSearch', [GoogleController::class, 'getJsonSearch'])->middleware(['auth']);
 require __DIR__ . '/auth.php';
 Route::get('/search/',  [PuzzelController::class, 'search'])->name('search');
+Route::get('/searchallepuzzels/',  [PuzzelController::class, 'searchallepuzzels'])->name('searchallepuzzels');
+Route::post('/addimage', [PuzzelController::class, 'addimage'])->name('addimage');
 // Route::get('/search/{id}', [PuzzelController::class, 'search']);
 
 
