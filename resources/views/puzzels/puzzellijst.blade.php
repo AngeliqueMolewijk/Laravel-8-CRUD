@@ -30,18 +30,22 @@
         </tr>
     </table> --}}
     <form action="{{ route('searchallepuzzels') }}" method="GET" class="d-flex mb-2" enctype="multipart/form-data">
-        <input  name="searchnaam" type="search" placeholder="Search" aria-label="Search" value="<?php if (isset($_POST['searchnaam'])) echo $_POST['searchnaam']; ?>">
+        <input  name="searchnaam" type="search" placeholder="Search" aria-label="Search" value="{{ request()->input('searchnaam') }}">
         <label for="aantal">Aantal stukjes:</label>
         <select name="aantal" id="aantal">
             <option value="">--</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-            <option value="1500">1500</option>
-            <option value="2000">2000</option>
+            <option value="<500" {{ old('aantal', request()->input('aantal')) == '<500' ? 'selected' : '' }}>lager dan 500</option>
+            <option value="500" {{ old('aantal', request()->input('aantal')) == 500 ? 'selected' : '' }}>500</option>
+            <option value="1000" {{ old('aantal', request()->input('aantal')) == 1000 ? 'selected' : '' }}>1000</option>
+            <option value="1500" {{ old('aantal', request()->input('aantal')) == 1500 ? 'selected' : '' }}>1500</option>
+            <option value="2000" {{ old('aantal', request()->input('aantal')) == 2000 ? 'selected' : '' }}>2000</option>
+            <option value=">2000" {{ old('aantal', request()->input('aantal')) == '>2000' ? 'selected' : '' }}>Meer dan 2000</option>
+
         </select>
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
     <div class="container">
+        @isset($allePuzzels)
         @foreach ($allePuzzels->chunk(3) as $chunk)
             <div class="row">
                 @foreach ($chunk as $puzzel)
@@ -70,7 +74,7 @@
                                 <div class="mt-auto text-center">
 
                                     <form action="{{ route('puzzels.destroy', $puzzel->id) }}" method="POST">
-                                        <a class="btn btn-primary" href="{{ route('puzzels.edit', $puzzel->id) }}">Edit</a>
+                                        <a class="btn btn-primary" href="{{ route('editallepuzzels', $puzzel->id) }}">Edit</a>
 
                                         @csrf
 
@@ -82,6 +86,7 @@
                 @endforeach
             </div>
         @endforeach
+        @endisset
     </div>
     {{-- {!! $puzzels->links() !!} --}}
 

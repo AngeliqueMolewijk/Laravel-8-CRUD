@@ -115,6 +115,13 @@ class PuzzelController extends Controller
         return view('puzzels.edit', compact(['puzzel', 'allePuzzels']));
 
     }
+    public function editallepuzzels($id)
+    {
+        // $title = $AllePuzzels->getAttribute('title');
+
+        $allePuzzels = AllePuzzels::find($id);
+        return view('puzzels.editallepuzzel', with(['puzzel' => $allePuzzels]));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -144,7 +151,28 @@ class PuzzelController extends Controller
         return redirect()->route('puzzels.index')
         ->with('success', 'Puzzel updated successfully');
     }
+    public function updateallepuzzels(Request $request)
+    {
+        // dd(
+        //     $request
+        // );
+        $allePuzzel = AllePuzzels::find($request->id);
+        // dd($allePuzzel);
+        // dd($request->image);
+        // dd($request->hasFile('image'));
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            // dd($filename);
 
+            $allePuzzel->image = $filename;
+        }
+        $allePuzzel->save();
+
+        return redirect()->route('allepuzzels')
+        ->with('success', 'Puzzel updated successfully');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -183,11 +211,24 @@ class PuzzelController extends Controller
         $searchname = $request->input('searchnaam');
         // dd($searchname);
         $aantal = $request->input('aantal');
-        $allePuzzels = AllePuzzels::query()
-            ->where('Aant', 'LIKE', "%{$aantal}%")
-            ->where('NaamNederlands', 'LIKE', "%{$searchname}%")
-            ->orWhere('NaamEngels', 'LIKE', "%{$searchname}%")
-            ->get()->sortByDesc('Jaar', SORT_NUMERIC);
+        $allePuzzels = AllePuzzels::where(function ($query) use ($aantal) {
+            if ($aantal == "<500") {
+                $query->where('Aant', '<', 500);
+            } elseif ($aantal == ">2000") {
+                $query->where('Aant', '>', 2000);
+            } elseif (isset($aantal)) {
+                $query->where('Aant', '=', "{$aantal}");
+            };
+        })->where(function ($query) use ($searchname) {
+            $query->where('NaamNederlands', 'LIKE', "%{$searchname}%")
+            ->orWhere('NaamEngels', 'LIKE', "%{$searchname}%");
+        })->get()->sortByDesc('Jaar', SORT_NUMERIC);
+
+        // $allePuzzels = AllePuzzels::query()
+        //     ->where('Aant', 'LIKE', "%{$aantal}%")
+        //     ->where('NaamNederlands', 'LIKE', "%{$searchname}%")
+        //     ->orWhere('NaamEngels', 'LIKE', "%{$searchname}%")
+        //     ->get()->sortByDesc('Jaar', SORT_NUMERIC);
         return view('puzzels.puzzellijst', compact('allePuzzels'));
     }
     // public function addimage($puzzelid, $puzzelimage)

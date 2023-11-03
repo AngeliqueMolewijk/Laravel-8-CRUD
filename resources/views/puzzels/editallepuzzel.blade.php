@@ -24,7 +24,7 @@
     @endif
     <img class="card-img-top img-responsive" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" >
 
-    <form action="{{ route('puzzels.update',$puzzel->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('updateallepuzzels') }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
         <div class="row mb-2">
@@ -35,25 +35,25 @@
                 </div>
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="title" class="form-control"value="{{$puzzel->title}}" placeholder="Name">
+                    <input type="text" name="title" class="form-control"value="{{$puzzel->NaamNederlands}}" placeholder="Name">
                 </div>
-                <div class="form-group">
-                    <strong>Stukjes:</strong>
-                    <input type="text" name="stukjes" class="form-control" value= "{{$puzzel->stukjes}}" placeholder="Stukjes">
+                 <div class="form-group">
+                    <strong>id:</strong>
+                    <input type="text" name="id" class="form-control" value= "{{$puzzel->id}}" >
                 </div>      
-                <div class="form-group">
+                {{--<div class="form-group">
                     <strong>Nummer:</strong>
-                    <input type="text" name="nummer" class="form-control" value= "{{$puzzel->nummer}}" placeholder="Nummer">
-                </div>         
-                <div class="form-group">
+                    <input type="text" name="nummer" class="form-control" value= "{{$puzzel->Nr}}" placeholder="Nummer" hidden>
+                </div>          --}}
+                {{-- <div class="form-group">
                     <strong>Eigen:</strong>
                     <input type="checkbox" name="eigen" id="eigen" value="1" {{  ($puzzel->own == 1 ? ' checked' : '') }}>
                     {{-- <input type="checkbox" name="eigen" class="form-control" value= "{{$puzzel->own}}" placeholder="Eigen" value="1"> --}}
-                </div>            <div class="form-group">
+                {{-- </div>            <div class="form-group">
                     <strong>Gelegd:</strong>
-                    <input type="checkbox" name="gelegd" id="gelegd" value="1" {{  ($puzzel->gelegd == 1 ? ' checked' : '') }}>
+                    <input type="checkbox" name="gelegd" id="gelegd" value="1" {{  ($puzzel->gelegd == 1 ? ' checked' : '') }}> --}}
                     {{-- <input type="checkbox" name="gelegd" class="form-control"value= "{{$puzzel->gelegd}}" placeholder="Gelegd" value="1"> --}}
-                </div>
+                </div> 
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
