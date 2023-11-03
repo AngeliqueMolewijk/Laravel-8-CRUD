@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Puzzel;
-use App\Models\AllePuzzels;
+use App\Models\Allepuzzels;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -108,7 +108,7 @@ class PuzzelController extends Controller
     public function edit(Puzzel $puzzel)
     {
         $title = $puzzel->getAttribute('title');
-        $allePuzzels = AllePuzzels::query()
+        $allePuzzels = Allepuzzels::query()
             ->where('NaamNederlands', 'LIKE', "%{$title}%")->orWhere('NaamEngels', 'LIKE', "%{$title}%")
             ->get()->sortByDesc('Jaar', SORT_NUMERIC);
         // $allePuzzels = AllePuzzels::all()->sortByDesc('Jaar');
@@ -119,7 +119,7 @@ class PuzzelController extends Controller
     {
         // $title = $AllePuzzels->getAttribute('title');
 
-        $allePuzzels = AllePuzzels::find($id);
+        $allePuzzels = Allepuzzels::find($id);
         return view('puzzels.editallepuzzel', with(['puzzel' => $allePuzzels]));
     }
 
@@ -156,7 +156,7 @@ class PuzzelController extends Controller
         // dd(
         //     $request
         // );
-        $allePuzzel = AllePuzzels::find($request->id);
+        $allePuzzel = Allepuzzels::find($request->id);
         // dd($allePuzzel);
         // dd($request->image);
         // dd($request->hasFile('image'));
@@ -201,7 +201,7 @@ class PuzzelController extends Controller
     }
     public function allePuzzels()
     {
-        $allePuzzels = AllePuzzels::all()->sortByDesc('Jaar');
+        $allePuzzels = Allepuzzels::all()->sortByDesc('Jaar');
 
         return view('puzzels.puzzellijst', compact('allePuzzels'));
     }
@@ -211,7 +211,7 @@ class PuzzelController extends Controller
         $searchname = $request->input('searchnaam');
         // dd($searchname);
         $aantal = $request->input('aantal');
-        $allePuzzels = AllePuzzels::where(function ($query) use ($aantal) {
+        $allePuzzels = Allepuzzels::where(function ($query) use ($aantal) {
             if ($aantal == "<500") {
                 $query->where('Aant', '<', 500);
             } elseif ($aantal == ">2000") {
@@ -243,7 +243,7 @@ class PuzzelController extends Controller
     public function addimage(Request $request)
     {
         // dd($request->id);
-        $puzzeladdimage = AllePuzzels::find($request->id);
+        $puzzeladdimage = Allepuzzels::find($request->id);
         // dd($puzzeladdimage);
         $puzzeladdimage->image = $request->image;
         $puzzeladdimage->save();
