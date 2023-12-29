@@ -56,7 +56,8 @@
     <div id="testtext"> test </div>
     <form action="{{ route('puzzels.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <img class="card-img-top" id="newimage" src=""  alt="Italian Trulli" width="400px">
+        <div class="col-lg-4">
+        <img class="card-img-top" id="newimage" src=""  alt="Italian Trulli" width="400px"></div>
         {{-- <input id="newimage" name="newimage" type="image" width="400" alt="Login"
             src="test.jpg" /> --}}
         <div class="row">

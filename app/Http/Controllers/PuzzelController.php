@@ -17,7 +17,7 @@ class PuzzelController extends Controller
      */
     public function index()
     {
-        $puzzels = Puzzel::all()->sortByDesc('updated_at');
+        $puzzels = Puzzel::all()->sortByDesc('created_at');
 
         return view('puzzels.index', compact('puzzels'));
     }

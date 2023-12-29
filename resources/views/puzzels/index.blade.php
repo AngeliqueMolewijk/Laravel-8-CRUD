@@ -48,24 +48,29 @@
                                     <li class="list-group-item">Stukjes:
                                         {{ $puzzel->stukjes }}</li>
                                     <li class="list-group-item">
+                                        Eigen:
+
                                         @if ($puzzel->own === 1)
-                                            <span style="background-color: rgb(219, 243, 221);">
-                                                Eigen:    Ja
+                                            <span style="color: rgb(0, 128, 0);font-weight: bold;">
+                                                    Ja
                                             </span>
                                         @else
-                                            <span style="background-color: rgb(220, 217, 217);">
-                                                Eigen:    Nee
+                                            {{-- <span style="background-color: rgb(220, 217, 217);"> --}}
+                                                    Nee
                                             </span>
                                         @endif
                                     </li>
                                     <li class="list-group-item">
+                                        Gelegd:
                                         @if ($puzzel->gelegd === 1)
-                                            <span style="background-color: rgb(219, 243, 221);">
-                                                Gelegd:    Ja
+                                        
+                                            <span style="color: rgb(0, 128, 0);font-weight: bold;">
+                                                    Ja
                                             </span>
                                         @else
-                                            <span style="background-color: rgb(220, 217, 217);">
-                                                Gelegd:   Nee
+                                        
+                                            {{-- <span style="background-color: rgb(220, 217, 217);"> --}}
+                                                  Nee
                                             </span>
                                         @endif
                                     </li>
