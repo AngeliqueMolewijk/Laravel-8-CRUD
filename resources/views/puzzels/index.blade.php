@@ -49,7 +49,6 @@
                                         {{ $puzzel->stukjes }}</li>
                                     <li class="list-group-item">
                                         Eigen:
-
                                         @if ($puzzel->own === 1)
                                             <span style="color: rgb(0, 128, 0);font-weight: bold;">
                                                     Ja
