@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-   
+
     {{-- <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
@@ -28,30 +28,33 @@
     <div class="col-lg-4 col-sm 2 mb-3 mb-sm-0">
 
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top img-responsive" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli" width="1000PX">
+            <img class="card-img-top img-responsive" src="{{ url('images/' . $puzzel->image) }}" alt="Italian Trulli"
+                width="1000PX">
             <div class="card-body d-flex flex-column ">
                 <h5 class="card-title"> {{ $puzzel->title }}</h5>
+                <h5 class="card-title"> {{ $puzzel->note }}</h5>
+
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Stukjes:
                         {{ $puzzel->stukjes }}</li>
-                        <li class="list-group-item">Eigen:
-                        @if($puzzel->own === 1)
-                        Ja
-                        @else
-                        Nee    
-                        @endif
-                    </li>
-                    <li class="list-group-item">Gelegd:
-                        @if ($puzzel->gelegd ===1)
-                        Ja
+                    <li class="list-group-item">Eigen:
+                        @if ($puzzel->own === 1)
+                            Ja
                         @else
                             Nee
                         @endif
-                       </li>
-                  </ul>
-                
-                
-                
+                    </li>
+                    <li class="list-group-item">Gelegd:
+                        @if ($puzzel->gelegd === 1)
+                            Ja
+                        @else
+                            Nee
+                        @endif
+                    </li>
+                </ul>
+
+
+
 
                 <form action="{{ route('puzzels.destroy', $puzzel->id) }}" method="POST">
 

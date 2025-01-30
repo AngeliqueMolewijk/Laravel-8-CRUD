@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Auth;
+
 class PuzzelController extends Controller
 {
     /**
@@ -42,35 +43,17 @@ class PuzzelController extends Controller
     {
         // dd($request);
         $puzzel = new Puzzel;
-        
-        // dd($request->file('image')->getClientOriginalExtension());
+
         if ($request->file('image')) {
             $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path() . '/images/', $filename);
-
-
-            // $img = Image::make($request->file('image')->getRealPath());
-            // $img->resize(500, 500, function ($constraint) {
-            //     $constraint->aspectRatio();
-            // })->save(storage_path('app/public/' . '/' . $filename));
-            // $filesave = ResizeImage::make($request->file('image'))
-            // ->resize(100, 100)->save();
-            // $filesave->move(public_path('images'), $filename);
             $puzzel->image = $filename;
         }
         if ($request->newurl) {
             $contents = file_get_contents($request->newurl);
             $name = date('YmdHi') . substr($request->newurl, strrpos($request->newurl, '/') + 1);
             Storage::disk('public_uploads')->put($name, $contents);
-            // dd($contents);
-            // $filename = date('YmdHi') . ".jpg";
-            // // $filename = date('YmdHi') . $file->getClientOriginalName();
-            // $contents->move(public_path('images'));
-            // $img = Image::make($contents);
-            // $img->resize(500, 500, function ($constraint) {
-            //     $constraint->aspectRatio();
-            // })->save(storage_path('app/public/' . '/' . $filename));
             $puzzel->image = $name;
         }
         $puzzel->title = $request->newname;
@@ -78,6 +61,7 @@ class PuzzelController extends Controller
         $puzzel->nummer = $request->nummer;
         $puzzel->own = $request->eigen;
         $puzzel->gelegd = $request->gelegd;
+        $puzzel->note = $request->note;
         // $puzzel->image = $imageName;
         $puzzel->save();
 
@@ -96,7 +80,6 @@ class PuzzelController extends Controller
         $puzzel = Puzzel::find($id);
 
         return view('puzzels.show')->with("puzzel", $puzzel);
-
     }
 
     /**
@@ -113,7 +96,6 @@ class PuzzelController extends Controller
             ->get()->sortByDesc('Jaar', SORT_NUMERIC);
         // $allePuzzels = AllePuzzels::all()->sortByDesc('Jaar');
         return view('puzzels.edit', compact(['puzzel', 'allePuzzels']));
-
     }
     public function editallepuzzels($id)
     {
@@ -146,6 +128,7 @@ class PuzzelController extends Controller
         $puzzel->nummer = $request->nummer;
         $puzzel->own = $request->eigen;
         $puzzel->gelegd = $request->gelegd;
+        $puzzel->note = $request->note;
         $puzzel->save();
 
         return redirect()->route('puzzels.index')
@@ -248,6 +231,35 @@ class PuzzelController extends Controller
         $puzzeladdimage->image = $request->image;
         $puzzeladdimage->save();
         return redirect('puzzels/' . $request->originalid . '/edit');
-        
+    }
+
+    public function addFromAllepuzzels(Request $request)
+    {
+        // dd($request);
+        // dd($request->puzzelimage);
+
+
+        $puzzel = new Puzzel;
+
+        if (isset($request->puzzelimage)) {
+            // $file = $request->file('image');
+            // $filename = date('YmdHi') . $file->getClientOriginalName();
+            // $file->move(public_path() . '/images/', $filename);
+            $puzzel->image = $request->puzzelimage;
+        }
+        // if ($request->newurl) {
+        //     $contents = file_get_contents($request->newurl);
+        //     $name = date('YmdHi') . substr($request->newurl, strrpos($request->newurl, '/') + 1);
+        //     Storage::disk('public_uploads')->put($name, $contents);
+        //     $puzzel->image = $name;
+        // }
+        $puzzel->title = $request->name;
+        $puzzel->stukjes = $request->aantal;
+        $puzzel->nummer = $request->nummer;
+        // $puzzel->image = $imageName;
+        $puzzel->save();
+
+        return redirect()->route('puzzels.index')
+        ->with('success', 'Product created successfully.');
     }
 }

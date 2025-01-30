@@ -41,7 +41,7 @@
             <div class="row">
                 @foreach ($images as $item)
                     <div class="col-lg-4 col-md-4 col-sm-12 ">
-                        <div class="card " id= "cardid"  style="width: 18rem;" onclick="getImageUrl(this)">
+                        <div class="card " id= "cardid" style="width: 18rem;" onclick="getImageUrl(this)">
                             <img class="card-img-top" src="{{ $item->link }}" id="getimage" alt="Italian Trulli"
                                 width="200px">
                             <div class="card-body">
@@ -53,18 +53,19 @@
             </div>
         </div>
     @endisset
-    <div id="testtext"> test </div>
+    {{-- <div id="testtext"> test </div> --}}
     <form action="{{ route('puzzels.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="col-lg-4">
-        <img class="card-img-top" id="newimage" src=""  alt="Italian Trulli" width="400px"></div>
+            <img class="card-img-top" id="newimage" src="" width="400px">
+        </div>
         {{-- <input id="newimage" name="newimage" type="image" width="400" alt="Login"
             src="test.jpg" /> --}}
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <label for="image">Choose a photo!</label>
-                    <input type="file"  class="form-control" name="image">
+                    <input type="file" class="form-control" name="image">
                 </div>
                 {{-- <div class="form-group">
                     <label for="image">Choose a photo!</label>
@@ -75,7 +76,7 @@
                 </div>
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text"  id="newname" name="newname" class="form-control">
+                    <input type="text" id="newname" name="newname" class="form-control">
                 </div>
                 <div class="form-group">
                     <strong>Nummer:</strong>
@@ -87,11 +88,15 @@
                 </div>
                 <div class="form-group">
                     <strong>Eigen:</strong>
-                    <input class="form-check-input" type="checkbox" name="eigen"  value="1">
+                    <input class="form-check-input" type="checkbox" name="eigen" value="1">
                 </div>
                 <div class="form-group">
                     <strong>Gelegd:</strong>
-                    <input class="form-check-input" type="checkbox" name="gelegd"  value="1">
+                    <input class="form-check-input" type="checkbox" name="gelegd" value="1">
+                </div>
+                <div class="form-group">
+                    <strong>Note:</strong>
+                    <input class="form-control" type="text" name="note">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

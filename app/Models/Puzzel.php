@@ -7,8 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Puzzel extends Model
 {
-    use HasFactory;
+    // use Sortable;
+    // use HasFactory;
     protected $fillable = [
-        'title', 'image', 'stukjes', 'own', 'gelegd'
+        'title',
+        'image',
+        'stukjes',
+        'own',
+        'gelegd'
     ];
+    // public $sortable = ['title', 'own', 'gelegd', 'created_at'];
 }
