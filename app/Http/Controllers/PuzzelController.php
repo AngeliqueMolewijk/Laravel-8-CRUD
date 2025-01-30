@@ -7,10 +7,17 @@ use App\Models\Allepuzzels;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-use Auth;
+// use Auth;
+use Illuminate\Support\Facades\Auth;
+use PSpell\Config;
 
 class PuzzelController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +25,7 @@ class PuzzelController extends Controller
      */
     public function index()
     {
-        $puzzels = Puzzel::all()->sortByDesc('created_at');
+        $puzzels = Puzzel::all()->where('userid', Auth::id())->sortByDesc('created_at');
 
         return view('puzzels.index', compact('puzzels'));
     }
@@ -41,6 +48,7 @@ class PuzzelController extends Controller
      */
     public function store(Request $request)
     {
+
         // dd($request);
         $puzzel = new Puzzel;
 
@@ -62,11 +70,13 @@ class PuzzelController extends Controller
         $puzzel->own = $request->eigen;
         $puzzel->gelegd = $request->gelegd;
         $puzzel->note = $request->note;
+        $puzzel->userid = $request->user()->id;
+
         // $puzzel->image = $imageName;
         $puzzel->save();
 
         return redirect()->route('puzzels.index')
-        ->with('success', 'Product created successfully.');
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -132,7 +142,7 @@ class PuzzelController extends Controller
         $puzzel->save();
 
         return redirect()->route('puzzels.index')
-        ->with('success', 'Puzzel updated successfully');
+            ->with('success', 'Puzzel updated successfully');
     }
     public function updateallepuzzels(Request $request)
     {
@@ -154,7 +164,7 @@ class PuzzelController extends Controller
         $allePuzzel->save();
 
         return redirect()->route('allepuzzels')
-        ->with('success', 'Puzzel updated successfully');
+            ->with('success', 'Puzzel updated successfully');
     }
     /**
      * Remove the specified resource from storage.
@@ -167,7 +177,7 @@ class PuzzelController extends Controller
         $puzzel->delete();
 
         return redirect()->route('puzzels.index')
-        ->with('success', 'Puzzel deleted successfully');
+            ->with('success', 'Puzzel deleted successfully');
     }
     public function search(Request $request)
     {
@@ -204,7 +214,7 @@ class PuzzelController extends Controller
             };
         })->where(function ($query) use ($searchname) {
             $query->where('NaamNederlands', 'LIKE', "%{$searchname}%")
-            ->orWhere('NaamEngels', 'LIKE', "%{$searchname}%");
+                ->orWhere('NaamEngels', 'LIKE', "%{$searchname}%");
         })->get()->sortByDesc('Jaar', SORT_NUMERIC);
 
         // $allePuzzels = AllePuzzels::query()
@@ -237,7 +247,7 @@ class PuzzelController extends Controller
     {
         // dd($request);
         // dd($request->puzzelimage);
-
+        // dd($user);
 
         $puzzel = new Puzzel;
 
@@ -256,10 +266,11 @@ class PuzzelController extends Controller
         $puzzel->title = $request->name;
         $puzzel->stukjes = $request->aantal;
         $puzzel->nummer = $request->nummer;
+        $puzzel->userid = $request->user()->id;
         // $puzzel->image = $imageName;
         $puzzel->save();
 
         return redirect()->route('puzzels.index')
-        ->with('success', 'Product created successfully.');
+            ->with('success', 'Product created successfully.');
     }
 }
