@@ -53,11 +53,11 @@
                 <div class="row">
                     @foreach ($chunk as $puzzel)
                         <div class="col-sm-12 col-lg-4  d-flex align-items-stretch">
-
                             <div class="card  mb-3" style="width: 18rem;">
-                                <a href="{{ route('puzzels.edit', $puzzel->id) }}">
-                                    <img class="card-img-top h-100" src="{{ url('images/' . $puzzel->image) }}"
-                                        alt="Italian Trulli" width="200px"></a>
+                                {{-- <a href="{{ route('editallepuzzels', $puzzel->id) }}"> --}}
+                                <img class="card-img-top h-100" src="{{ url('images/' . $puzzel->image) }}"
+                                    alt="Italian Trulli" width="200px">
+                                {{-- </a> --}}
                                 <div class="card-body d-flex flex-column mb-2">
                                     <h5 class="card-title"> {{ $puzzel->NaamNederlands }}</h5>
                                     <h5 class="card-title"> {{ $puzzel->NaamEngels }}</h5>
@@ -75,8 +75,9 @@
                                         <form method="POST"
                                             action="{{ route('addfromallepuzzels', ['puzzelimage' => $puzzel->image, 'name' => $puzzel->NaamNederlands, 'nummer' => $puzzel->Nr, 'aantal' => $puzzel->Aant]) }}"
                                             accept-charset="UTF-8">
-                                            <a class="btn btn-primary"
-                                                href="{{ route('editallepuzzels', $puzzel->id) }}">Edit</a>
+
+                                            {{-- <a class="btn btn-primary"
+                                                href="{{ route('editallepuzzels', $puzzel->id) }}">Edit</a> --}}
                                             <button type="submit" class="btn btn-primary">Puzzel toevoegen aan mijn
                                                 lijst</button>
 

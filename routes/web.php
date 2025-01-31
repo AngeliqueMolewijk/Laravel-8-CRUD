@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\PuzzelController;
+use App\Http\Controllers\UserController;
+use Illuminate\Auth\Middleware\Authorize;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +32,7 @@ Route::post('/addimage', [PuzzelController::class, 'addimage'])->name('addimage'
 Route::get('/editallepuzzels/{id}', [PuzzelController::class, 'editallepuzzels'])->name('editallepuzzels');
 Route::put('/updateallepuzzels', [PuzzelController::class, 'updateallepuzzels'])->name('updateallepuzzels');
 Route::post('/addfromallepuzzels', [PuzzelController::class, 'addFromAllepuzzels'])->name('addfromallepuzzels');
+Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth'); 
+
 
 // Route::get('/search/{id}', [PuzzelController::class, 'search']);

@@ -102,24 +102,16 @@
 
                                     <div class="mt-auto text-center">
 
-                                        <form action="{{ route('puzzels.destroy', $puzzelall->id) }}" method="POST">
+                                        <form method="POST"
+                                            action="{{ route('addfromallepuzzels', ['puzzelimage' => $puzzelall->image, 'name' => $puzzelall->NaamNederlands, 'nummer' => $puzzelall->Nr, 'aantal' => $puzzelall->Aant]) }}"
+                                            accept-charset="UTF-8">
 
-                                            <a class="btn btn-info" href="{{ route('puzzels.show', $puzzelall->id) }}">Show</a>
-                                            <a class="btn btn-primary"
-                                                href="{{ route('puzzels.edit', $puzzelall->id) }}">Edit</a>
-
-                                            {{-- <a class="btn btn-primary" href="{{ route('addimage', $puzzel->id) }}">Add Image</a> --}}
+                                            {{-- <a class="btn btn-primary"
+                                                href="{{ route('editallepuzzels', $puzzel->id) }}">Edit</a> --}}
+                                            <button type="submit" class="btn btn-primary">Puzzel toevoegen aan mijn
+                                                lijst</button>
 
                                             @csrf
-
-                                        </form>
-                                        <form action="{{ route('addimage') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $puzzelall->id }}">
-                                            <input type="hidden" name="image" value="{{ $puzzel->image }}">
-                                            <input type="hidden" name="originalid" value="{{ $puzzel->id }}">
-
-                                            <input type="submit" value="Add Image">
                                         </form>
                                         {{-- <a class="btn btn-info" href="{{ route('addimage', ['puzzelid' => $puzzelall->id,'puzzelimage' => $puzzel->image]) }}">Add Image</a> --}}
 

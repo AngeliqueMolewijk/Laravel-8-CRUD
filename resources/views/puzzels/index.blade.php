@@ -17,6 +17,72 @@
             <p>{{ $message }}</p>
         </div>
     @endif
+    <form action="{{ route('puzzels.index') }}">
+        <div class="row mb-5">
+            <div class="col-md-2">
+                Search:
+                <input class="form-control form-control-sm" type="search" name="q" value="{{ $q }}">
+            </div>
+            <div class="col-md-1 col-1">
+                Aantal:
+                <select name="aantal" class="form-control form-control-sm">
+                    <option {{ old('aantal', $aantalReturn) == '' ? 'selected' : '' }} value="">-</option>
+                    <option {{ old('aantal', $aantalReturn) == '<500' ? 'selected' : '' }} value="<500">
+                        < 500</option>
+                    <option {{ old('aantal', $aantalReturn) == '500' ? 'selected' : '' }} value="500">500</option>
+                    <option {{ old('aantal', $aantalReturn) == '1000' ? 'selected' : '' }} value="1000">1000</option>
+                    <option {{ old('aantal', $aantalReturn) == '1500' ? 'selected' : '' }} value="1500">1500</option>
+                    <option {{ old('aantal', $aantalReturn) == '>=2000' ? 'selected' : '' }} value=">=2000">=>2000</option>
+                </select>
+            </div>
+            <div class="col-md-1 col-1">
+                Gelegd:
+                <select id='gelegd' name="gelegd" class="form-control form-control-sm">
+                    <option {{ old('gelegd', $gelegd) == '' ? 'selected' : '' }} value="">-</option>
+                    <option {{ old('gelegd', $gelegd) == '0' ? 'selected' : '0' }} value="0">niet gelegd
+                    </option>
+                    <option {{ old('aantal', $gelegd) == '1' ? 'selected' : '1' }} value="1">gelegd</option>
+                </select>
+            </div>
+            <div class="col-md-1 col-1">
+                Eigen:
+                <select id='eigen' name="eigen" class="form-control form-control-sm">
+                    <option {{ old('eigen', $eigen) == '' ? 'selected' : '' }} value="">-</option>
+                    <option {{ old('eigen', $eigen) == '0' ? 'selected' : '0' }} value="0">niet eigen
+                    </option>
+                    <option {{ old('eigen', $eigen) == '1' ? 'selected' : '1' }} value="1">eigen</option>
+                </select>
+            </div>
+            <div class="col-md-1 col-1">
+                sortBy:
+                <select name="sortBy" class="form-control form-control-sm" value="{{ $sortBy }}">
+                    @foreach (['id', 'title', 'stukjes'] as $col)
+                        <option @if ($col == $sortBy) selected @endif value="{{ $col }}">
+                            {{ ucfirst($col) }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+
+            <div class="col-md-1 col-1">
+                Orderby:
+                <select name="orderBy" class="form-control form-control-sm" value="{{ $orderBy }}">
+                    @foreach (['asc', 'desc'] as $order)
+                        <option @if ($order == $orderBy) selected @endif value="{{ $order }}">
+                            {{ ucfirst($order) }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-md-2 col-2 pt-3">
+
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="{{ url('/') }}" class="btn btn-xs btn-info pull-right">Reset</a>
+
+            </div>
+        </div>
+    </form>
+
     <div class="container">
         @foreach ($puzzels->chunk(3) as $chunk)
             <div class="row">
@@ -90,5 +156,8 @@
             if (!confirm("Are You Sure to delete this"))
                 event.preventDefault();
         }
+        $("select").change(function() {
+            this.form.submit();
+        });
     </script>
 @endsection

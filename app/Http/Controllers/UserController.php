@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -26,7 +26,7 @@ class UserController extends Controller
         );
 
         if (Auth::attempt($user_data)) {
-            return redirect('main/successlogin');
+            return redirect('/puzzels');
         } else {
             return back()->with('error', 'Wrong Login Details');
         }
@@ -43,6 +43,6 @@ class UserController extends Controller
     function logout()
     {
         Auth::logout();
-        return redirect('main');
+        return redirect('/puzzels');
     }
 }

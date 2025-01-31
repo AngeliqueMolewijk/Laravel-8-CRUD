@@ -23,11 +23,40 @@ class PuzzelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $puzzels = Puzzel::all()->where('userid', Auth::id())->sortByDesc('created_at');
+        $sortBy = 'title';
+        $orderBy = 'desc';
+        $perPage = 20;
+        $q = null;
+        $aantal = 0;
+        $aantalReturn = 0;
+        $gelegd = null;
+        $eigen = null;
+        $sign = '=';
+        if ($request->has('orderBy')) $orderBy = $request->query('orderBy');
+        if ($request->has('sortBy')) $sortBy = $request->query('sortBy');
+        if ($request->has('perPage')) $perPage = $request->query('perPage');
+        if ($request->has('q')) $q = $request->query('q');
+        if ($request->has('aantal')) $aantal = $request->query('aantal');
+        if ($request->has('aantal')) $aantalReturn = $request->query('aantal');
+        if ($request->has('gelegd')) $gelegd = $request->query('gelegd');
+        if ($request->has('eigen')) $eigen = $request->query('eigen');
+        if (str_contains($aantal, '<')) {
+            $aantal = str_replace('<', "", $aantal);
+            $sign = '<';
+        } elseif (str_contains($aantal, '>')) {
+            $aantal = str_replace(['>', '='], "", $aantal);
+            $sign = '>=';
+        }
+        $aantal = (int)$aantal;
+        if ($aantal == 0) {
+            $sign = '>';
+        }
+        $puzzels = Puzzel::where('title', 'LIKE', $q)->where('stukjes', $sign, $aantal)->where('gelegd', 'LIKE', $gelegd)->where('own', 'LIKE', $eigen)->orderBy($sortBy, $orderBy)->paginate($perPage)->where('userid', Auth::id());
 
-        return view('puzzels.index', compact('puzzels'));
+
+        return view('puzzels.index', compact('puzzels', 'orderBy', 'sortBy', 'q', 'perPage', 'aantalReturn', 'gelegd', 'eigen'));
     }
 
     /**
@@ -101,16 +130,24 @@ class PuzzelController extends Controller
     public function edit(Puzzel $puzzel)
     {
         $title = $puzzel->getAttribute('title');
-        $allePuzzels = Allepuzzels::query()
-            ->where('NaamNederlands', 'LIKE', "%{$title}%")->orWhere('NaamEngels', 'LIKE', "%{$title}%")
-            ->get()->sortByDesc('Jaar', SORT_NUMERIC);
+        $stukjes = $puzzel->getAttribute('stukjes');
+
+        // $allePuzzels = Allepuzzels::query()
+        //     ->where('NaamNederlands', 'LIKE', "%{$title}%")->orWhere('NaamEngels', 'LIKE', "%{$title}%")
+        //     ->get()->sortByDesc('Jaar', SORT_NUMERIC);
         // $allePuzzels = AllePuzzels::all()->sortByDesc('Jaar');
-        return view('puzzels.edit', compact(['puzzel', 'allePuzzels']));
+        $allePuzzels = Allepuzzels::query()
+            ->where('Aant', "{$stukjes}")
+            ->get()->sortByDesc('Jaar ', SORT_NUMERIC);
+        // dd($allePuzzels);
+
+        return view('puzzels.edit', compact(['puzzel', 'allePuzzels ']));
     }
+
     public function editallepuzzels($id)
     {
-        // $title = $AllePuzzels->getAttribute('title');
-
+        // $title = $AllePuzzels->getAttribute('title ');
+        // dd($id);
         $allePuzzels = Allepuzzels::find($id);
         return view('puzzels.editallepuzzel', with(['puzzel' => $allePuzzels]));
     }
